@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_3djavatk2.main" default="compile.module.3djavatk2.main">
+  <dirname property="module.3djavatk2.main.basedir" file="${ant.file.module_3djavatk2.main}"/>
+  
+  <property name="module.jdk.home.3djavatk2.main" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.3djavatk2.main" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.3djavatk2.main" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.3djavatk2.main" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="3djavatk2.main.output.dir" value="${module.3djavatk2.main.basedir}/../../build/classes/java/main"/>
+  <property name="3djavatk2.main.testoutput.dir" value="${module.3djavatk2.main.basedir}/../../build/classes/java/main"/>
+  
+  <path id="3djavatk2.main.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="3djavatk2.main.module.production.classpath">
+    <path refid="${module.jdk.classpath.3djavatk2.main}"/>
+  </path>
+  
+  <path id="3djavatk2.main.runtime.production.module.classpath">
+    <pathelement location="${3djavatk2.main.output.dir}"/>
+  </path>
+  
+  <path id="3djavatk2.main.module.classpath">
+    <path refid="${module.jdk.classpath.3djavatk2.main}"/>
+    <pathelement location="${3djavatk2.main.output.dir}"/>
+  </path>
+  
+  <path id="3djavatk2.main.runtime.module.classpath">
+    <pathelement location="${3djavatk2.main.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.3djavatk2.main">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.3djavatk2.main">
+    <patternset refid="excluded.from.module.3djavatk2.main"/>
+  </patternset>
+  
+  <path id="3djavatk2.main.module.sourcepath">
+    <dirset dir="${module.3djavatk2.main.basedir}/../../src/main">
+      <include name="java"/>
+      <include name="resources"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.3djavatk2.main" depends="compile.module.3djavatk2.main.production,compile.module.3djavatk2.main.tests" description="Compile module 3djavatk2.main"/>
+  
+  <target name="compile.module.3djavatk2.main.production" depends="register.custom.compilers" description="Compile module 3djavatk2.main; production classes">
+    <mkdir dir="${3djavatk2.main.output.dir}"/>
+    <javac2 destdir="${3djavatk2.main.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.3djavatk2.main}/javac">
+      <compilerarg line="${compiler.args.3djavatk2.main}"/>
+      <bootclasspath refid="3djavatk2.main.module.bootclasspath"/>
+      <classpath refid="3djavatk2.main.module.production.classpath"/>
+      <src refid="3djavatk2.main.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.3djavatk2.main"/>
+    </javac2>
+    
+    <copy todir="${3djavatk2.main.output.dir}">
+      <fileset dir="${module.3djavatk2.main.basedir}/../../src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.3djavatk2.main.basedir}/../../src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.3djavatk2.main.tests" depends="register.custom.compilers,compile.module.3djavatk2.main.production" description="compile module 3djavatk2.main; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.3djavatk2.main" description="cleanup module">
+    <delete dir="${3djavatk2.main.output.dir}"/>
+    <delete dir="${3djavatk2.main.testoutput.dir}"/>
+  </target>
+</project>

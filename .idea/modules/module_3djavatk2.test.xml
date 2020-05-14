@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_3djavatk2.test" default="compile.module.3djavatk2.test">
+  <dirname property="module.3djavatk2.test.basedir" file="${ant.file.module_3djavatk2.test}"/>
+  
+  <property name="module.jdk.home.3djavatk2.test" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.3djavatk2.test" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.3djavatk2.test" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.3djavatk2.test" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="3djavatk2.test.output.dir" value="undefined"/>
+  <property name="3djavatk2.test.testoutput.dir" value="${module.3djavatk2.test.basedir}/../../build/classes/java/test"/>
+  
+  <path id="3djavatk2.test.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="3djavatk2.test.module.production.classpath">
+    <path refid="${module.jdk.classpath.3djavatk2.test}"/>
+    <pathelement location="${3djavatk2.main.output.dir}"/>
+    <path refid="library.gradle:_junit:junit:4.12.classpath"/>
+    <path refid="library.gradle:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+  </path>
+  
+  <path id="3djavatk2.test.runtime.production.module.classpath">
+    <path refid="3djavatk2.main.runtime.production.module.classpath"/>
+    <path refid="library.gradle:_junit:junit:4.12.classpath"/>
+    <path refid="library.gradle:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+  </path>
+  
+  <path id="3djavatk2.test.module.classpath">
+    <path refid="${module.jdk.classpath.3djavatk2.test}"/>
+    <pathelement location="${3djavatk2.main.output.dir}"/>
+    <path refid="library.gradle:_junit:junit:4.12.classpath"/>
+    <path refid="library.gradle:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+  </path>
+  
+  <path id="3djavatk2.test.runtime.module.classpath">
+    <pathelement location="${3djavatk2.test.testoutput.dir}"/>
+    <path refid="3djavatk2.main.runtime.module.classpath"/>
+    <path refid="library.gradle:_junit:junit:4.12.classpath"/>
+    <path refid="library.gradle:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.3djavatk2.test">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.3djavatk2.test">
+    <patternset refid="excluded.from.module.3djavatk2.test"/>
+  </patternset>
+  
+  <path id="3djavatk2.test.module.test.sourcepath">
+    <dirset dir="${module.3djavatk2.test.basedir}/../../src/test">
+      <include name="java"/>
+      <include name="resources"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.3djavatk2.test" depends="compile.module.3djavatk2.test.production,compile.module.3djavatk2.test.tests" description="Compile module 3djavatk2.test"/>
+  
+  <target name="compile.module.3djavatk2.test.production" depends="register.custom.compilers,compile.module.3djavatk2.main" description="Compile module 3djavatk2.test; production classes"/>
+  
+  <target name="compile.module.3djavatk2.test.tests" depends="register.custom.compilers,compile.module.3djavatk2.test.production" description="compile module 3djavatk2.test; test classes" unless="skip.tests">
+    <mkdir dir="${3djavatk2.test.testoutput.dir}"/>
+    <javac2 destdir="${3djavatk2.test.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.3djavatk2.test}/javac">
+      <compilerarg line="${compiler.args.3djavatk2.test}"/>
+      <bootclasspath refid="3djavatk2.test.module.bootclasspath"/>
+      <classpath refid="3djavatk2.test.module.classpath"/>
+      <src refid="3djavatk2.test.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.3djavatk2.test"/>
+    </javac2>
+    
+    <copy todir="${3djavatk2.test.testoutput.dir}">
+      <fileset dir="${module.3djavatk2.test.basedir}/../../src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.3djavatk2.test.basedir}/../../src/test/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.3djavatk2.test" description="cleanup module">
+    <delete dir="${3djavatk2.test.output.dir}"/>
+    <delete dir="${3djavatk2.test.testoutput.dir}"/>
+  </target>
+</project>
